@@ -14,16 +14,15 @@ from .serializers import *
 from .throttling import ReviewCreateThrottle, ReviewListThrottle
 
 
-class WatchlistGV(generics.ListAPIView):
-    queryset = Watchlist.objects.all()
-    serializer_class = WatchlistSerializer
-    pagination_class = WatchlistPagination
+# class WatchlistGV(generics.ListAPIView):
+    # queryset = Watchlist.objects.all()
+    # serializer_class = WatchlistSerializer
+    # pagination_class = WatchlistPagination
     # filter_backends = [filters.SearchFilter, DjangoFilterBackend]
     # search_fields = ['title', 'platform__name']
     # filterset_fields = ['average_rating', 'total_reviews']
 
 
-# ====================================================================
 
 class UserReviewList(generics.ListAPIView):
     serializer_class = ReviewSerializer
@@ -35,8 +34,6 @@ class UserReviewList(generics.ListAPIView):
     def get_queryset(self):
         username = self.request.query_params.get('username')
         return Review.objects.filter(user__username=username)
-
-# =====================================================================
 
 
 class WatchlistView(APIView):
@@ -58,7 +55,6 @@ class WatchlistView(APIView):
         else:
             return Response(serializer.errors)
 
-# ==============================================================================
 
 
 class WatchlistDetailView(APIView):
@@ -85,7 +81,6 @@ class WatchlistDetailView(APIView):
         watchlist.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-# ===============================================================================
 
 
 class PlatformListView(mixins.CreateModelMixin, mixins.ListModelMixin, generics.GenericAPIView):
@@ -103,7 +98,6 @@ class PlatformListView(mixins.CreateModelMixin, mixins.ListModelMixin, generics.
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
 
-# ============================================================================
 
 
 class PlatformDetailView(generics.RetrieveUpdateDestroyAPIView):
@@ -111,7 +105,6 @@ class PlatformDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = PlatformSerializer
     permission_classes = [IsAdminOrReadOnly]
 
-# =============================================================================
 
 
 class ReviewCreateView(generics.CreateAPIView):
@@ -146,7 +139,6 @@ class ReviewCreateView(generics.CreateAPIView):
         serializer.save(watchlist=watchlist, user=user)
         return super().perform_create(serializer)
 
-# =============================================================================
 
 
 class ReviewListView(generics.ListAPIView):
@@ -159,7 +151,6 @@ class ReviewListView(generics.ListAPIView):
         pk = self.kwargs['pk']
         return Review.objects.filter(watchlist=pk)
 
-# =================================================================================
 
 
 class ReviewDetailView(generics.RetrieveUpdateDestroyAPIView):
@@ -167,4 +158,3 @@ class ReviewDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ReviewSerializer
     permission_classes = [IsReviewUserOrReadOnly]
 
-# =================================================================================

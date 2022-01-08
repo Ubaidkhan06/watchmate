@@ -11,7 +11,6 @@ class ReviewSerializer(serializers.ModelSerializer):
         model = Review
         exclude = ['created_at', 'watchlist', 'updated_at']
 
-#==========================================================
 
 class WatchlistSerializer(serializers.ModelSerializer):
     # reviews = ReviewSerializer(many=True, read_only=True)
@@ -20,7 +19,6 @@ class WatchlistSerializer(serializers.ModelSerializer):
         model = Watchlist
         fields = '__all__'
 
-#==========================================================
 
 
 class PlatformSerializer(serializers.ModelSerializer):
@@ -29,5 +27,4 @@ class PlatformSerializer(serializers.ModelSerializer):
         model = Platform
         fields = '__all__'
 
-#==========================================================
 
